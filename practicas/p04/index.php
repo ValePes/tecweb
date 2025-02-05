@@ -74,6 +74,49 @@
         echo '</ol>'
     ?>
 
+    <h2>Ejercicio 3</h2>
+    <p>Muestra el contenido de cada variable inmediatamente después de cada asignación, verificar la evolución del tipo de estas variables (imprime todos los componentes de los arreglo):</p>
+    <?php
+    echo '<p>Contenido:</p>';
+    echo '<ul>';
+        $a = "PHP5";
+        print_r($a);
+        echo '<br>';
+        // Resultado en php tester: PHP5
+
+        $z[] = &$a;
+        print_r($z);
+        echo '<br>';
+        // Resultado en php tester: Array ( [0] => PHP5 )
+
+        $b = "5a version de PHP";
+        print_r($b);
+        echo '<br>';
+        // Resultado en php tester: 5a version de PHP
+
+        $c = intval($b) *10;
+        print_r($c);
+        echo '<br>';
+        // Resultado en php tester: 50
+
+        $a .= $b;
+        print_r($a);
+        echo '<br>';
+        // Resultado en php tester: PHP55a version de PHP
+
+        $b = intval($b); // Convierte a número antes de la multiplicación
+        $b *= $c;
+        print_r($b);
+        echo '<br>';
+        // Resultado en php tester: 250
+        
+        $z[0] = "MySQL";  
+        print_r($z); 
+        // Resultado en php tester: Array ( [0] => MySQL )
+    echo '</ul>';
+    ?>
+
+
     
 </body>
 </html>
