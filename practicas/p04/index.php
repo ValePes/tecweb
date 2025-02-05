@@ -151,6 +151,30 @@
         $z: Array ( [0] => MySQL )
         */
     ?>
+    <h2>Ejercicio 5</h2>
+    <p>Dar el valor de las variables $a, $b, $c al final del siguiente script:</p>
+    <ul>
+        <li>$a = “7 personas”</li>
+        <li>$b = (integer) $a</li>
+        <li>$a = “9E3”</li>
+        <li>$c = (double) $a</li>
+    </ul>
+
+    <?php
+        echo '<h3>Valor de la variable:</h3>';
+        echo '<ul>';
+        $a = "7 personas";
+        echo "<li>$a</li>";
+        $b = (integer) $a;
+        echo "<li>$b</li>";
+        $a = "9E3";
+        echo "<li>$a</li>";
+        $c = (double) $a;
+        echo "<li>$c</li>";
+        echo '</ul>';
+    ?>
+
+
     
 </body>
 </html>
