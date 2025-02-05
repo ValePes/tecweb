@@ -116,7 +116,41 @@
     echo '</ul>';
     ?>
 
-
+    <h2>Ejercicio 4</h2>
+    <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de la matriz $GLOBALS o del modificador global de PHP.</p>
+    
+    <?php    
+    $a = "PHP5";
+    $z[] = &$a;
+    $b = "5a version de PHP";
+    $c = intval($b) * 10;
+    $a .= $b;
+    $b = intval($b);
+    $b *= $c;
+    $z[0] = "MySQL";
+        function mostrarValores() {
+            global $a, $b, $c, $z; // Acceder a las variables globales
+            echo '<ul>';
+            echo '$a: ' .$GLOBALS['a'] . "<br>";
+            echo '$b: ' .$GLOBALS['b'] . "<br>";
+            echo '$c: ' .$GLOBALS['c'] . "<br>";
+            echo '$z: ';
+            print_r($GLOBALS['z']);
+            echo "<br>";
+            echo '</ul>';
+    }              
+        // Llamamos a la función para mostrar los valores
+        echo '<h3>Valores de: </h3>';
+        mostrarValores();
+        
+        /*Resultado en PHP tester:
+        Valores de:
+        $a: MySQL
+        $b: 250
+        $c: 50
+        $z: Array ( [0] => MySQL )
+        */
+    ?>
     
 </body>
 </html>
