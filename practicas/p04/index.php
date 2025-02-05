@@ -94,7 +94,7 @@
         echo '<br>';
         // Resultado en php tester: 5a version de PHP
 
-        $c = intval($b) *10;
+        $c = intval($b) *10; // Convierte a número antes de la multiplicación
         print_r($c);
         echo '<br>';
         // Resultado en php tester: 50
@@ -138,11 +138,11 @@
             echo "<br>";
             echo '</ul>';
     }              
-        // Llamamos a la función para mostrar los valores
+        // mostramos los valores
         echo '<h3>Valores de: </h3>';
         mostrarValores();
         
-        /*Resultado en PHP tester:
+        /*Prueba en PHP tester:
         Valores de:
         $a: MySQL
         $b: 250
