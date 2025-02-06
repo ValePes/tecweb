@@ -27,6 +27,8 @@
         foreach ($matriz as $fila) {
             echo implode(", ", $fila) . "<br>"; //Une los elementos de una matriz en una cadena
         }
+        echo '<br>';
+        echo "\n$totalNumeros números obtenidos en $iteraciones iteraciones\n";
     }
 
     function numeroE_While($num) {
@@ -55,5 +57,25 @@
         } while ($numeroB % $num !== 0);
         return "El primer múltiplo encontrado aleatoriamente de $num es: $numeroB";
     }
+
+    function arreglo_Indice(){
+        $arreglo = array();
+        for ($i = 97; $i <= 122; $i++) {
+            $arreglo[$i] = chr($i); // Convertir código ASCII en letra
+        }
+        return $arreglo;
+    }
+
+    function tabla($arreglo){
+        echo "<table>";
+        echo "<tr><th>Indice(ASCII)</th><th>Letra</th></tr>";
+        foreach ($arreglo as $key => $value) {
+            echo "<tr><td>$key</td><td>$value</td></tr>";
+        }
+        echo "</table>";
+    }
+    
+
+
 ?>
 
