@@ -32,6 +32,15 @@
             echo numeroE_While($_GET['numero']);
         }
     ?>
+    <h3>Crear una variante de este script utilizando el ciclo do-while.</h3>
+    <?php
+        require_once __DIR__ .'/src/funciones.php';
+        if (isset($_GET['numero'])) 
+        {
+            echo numeroE_DoWhile($_GET['numero']);
+        }
+    ?>
+
     
 
     <h2>Ejemplo de POST</h2>
