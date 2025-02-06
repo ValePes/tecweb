@@ -25,7 +25,35 @@
         
         // Mostrar la matriz
         foreach ($matriz as $fila) {
-            echo implode(", ", $fila) . "<br>";
+            echo implode(", ", $fila) . "<br>"; //Une los elementos de una matriz en una cadena
         }
     }
+
+    function numeroE_While($num) {
+        if(!is_numeric($num) || $num == 0) {
+            return "Por favor, proporciona un número válido.";
+        }
+        $num = intval($num);
+        $numeroA = 0;
+        while (true) {
+            $numeroA = rand(1, 100);
+            if ($numeroA % $num == 0) {
+                break;
+            }
+        }
+        return "El primer múltiplo encontrado aleatoriamente de $num es: $numeroA";
+    }
+
+    /*function numeroE_DoWhile($num) {
+        if (!is_numeric($num) || $num == 0) {
+            return "Por favor, proporciona un número válido.";
+        }
+        $num = intval($num);
+        $numeroB = 0;
+        do {
+            $numeroB = rand(1, 100);
+        } while ($numeroB % $num !== 0);
+        return "El primer múltiplo encontrado aleatoriamente de $num es: $numeroB";
+    }*/
 ?>
+
