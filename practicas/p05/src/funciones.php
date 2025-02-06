@@ -44,7 +44,7 @@
         return "El primer múltiplo encontrado aleatoriamente de $num es: $numeroA";
     }
 
-    /*function numeroE_DoWhile($num) {
+    function numeroE_DoWhile($num) {
         if (!is_numeric($num) || $num == 0) {
             return "Por favor, proporciona un número válido.";
         }
@@ -54,6 +54,6 @@
             $numeroB = rand(1, 100);
         } while ($numeroB % $num !== 0);
         return "El primer múltiplo encontrado aleatoriamente de $num es: $numeroB";
-    }*/
+    }
 ?>
 
