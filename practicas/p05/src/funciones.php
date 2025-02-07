@@ -68,11 +68,19 @@
 
     function tabla($arreglo){
         echo "<table>";
-        echo "<tr><th>Indice(ASCII)</th><th>Letra</th></tr>";
+        echo "<tr><th>Indice(ASCII)</th> <th>Letra</th></tr>";
         foreach ($arreglo as $key => $value) {
             echo "<tr><td>$key</td><td>$value</td></tr>";
         }
         echo "</table>";
+    }
+
+    function validar_Edad_Sexo($edad, $sexo) {
+        if ($sexo === "femenino" && $edad >= 18 && $edad <= 35) {
+            return "Bienvenido, usted está en el rango de edad permitido.";
+        } else {
+            return "Lo sentimos, no cumple con los requisitos necesarios.";
+        }
     }
     
 
