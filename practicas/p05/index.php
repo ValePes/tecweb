@@ -81,7 +81,34 @@
     ?>
     <h3>Resultado de Validación</h3>
     <p class="mensaje"><?php echo $mensaje; ?></p>
-    
+
+    <h2>Ejercicio 6</h2>
+    <p>Crea en código duro un arreglo asociativo que sirva para registrar el parque vehicular de una ciudad.</p>
+    <h3>Consultar Información de Vehículos</h3>
+        <form action="http://localhost/tecweb/practicas/p05/index.php" method="POST">
+            <label for="matricula">Ingrese Matrícula (o "todos" para ver todos los registros):</label>
+            <input type="text" name="matricula" required>
+            <button type="submit">Consultar</button>
+        </form>
+        <br>
+        <h3>Resultados de la búsqueda:</h3>
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $matricula = $_POST["matricula"] ?? "";
+                if ($matricula == "todos") {
+                    echo "<pre>";
+                    print_r($parqueVehicular);
+                    echo "</pre>";
+                } elseif (isset($parqueVehicular[$matricula])) {
+                    echo "<br><strong>Matricula: </strong> $matricula";
+                    echo "<pre>";
+                    print_r($parqueVehicular[$matricula]);
+                    echo "</pre>";
+                } else {
+                    echo "<p>Matricula no encontrada.</p>";
+                }
+            }
+        ?>
 
 
     <h2>Ejemplo de POST</h2>
@@ -99,8 +126,6 @@
             echo $_POST["email"];
         }
     ?>
-
-    
 
 </body>
 </html>
