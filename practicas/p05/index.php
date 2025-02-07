@@ -49,6 +49,41 @@
         tabla($arreglo);
     ?>
 
+    <h2>Ejercicio 5</h2>
+    <p>Usar las variables $edad y $sexo en una instrucción if para identificar una persona de sexo “femenino”, cuya edad oscile entre los 18 y 35 años y mostrar un mensaje de bienvenida apropiado.En caso contrario, deberá devolverse otro mensaje indicando el error.</p>
+        <h3>Ingrese sus datos</h3>
+        <form action="http://localhost/tecweb/practicas/p05/index.php" method="POST">
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad" required min="1"><br>
+
+        <label for="sexo">Sexo:</label>
+        <select name="sexo" required>
+            <option value="">Seleccione...</option>
+            <option value="femenino">Femenino</option>
+            <option value="masculino">Masculino</option>
+        </select><br>
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+    <?php
+        require_once __DIR__ .'/src/funciones.php';
+        // Verificar si se enviaron los datos por POST
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edad"]) && isset($_POST["sexo"])) {
+            $edad = intval($_POST["edad"]);
+            $sexo = strtolower($_POST["sexo"]);    
+            echo "<br><strong>Edad ingresada:</strong> $edad";
+            echo "<br><strong>Sexo ingresado:</strong> $sexo";
+    
+            $mensaje = validar_Edad_Sexo($edad, $sexo);
+        } else {
+            $mensaje = "No se han enviado datos. Por favor, complete el formulario.";
+        }
+    ?>
+    <h3>Resultado de Validación</h3>
+    <p class="mensaje"><?php echo $mensaje; ?></p>
+    
+
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
         Name: <input type="text" name="name"><br>
