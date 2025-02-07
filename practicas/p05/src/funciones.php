@@ -77,13 +77,146 @@
 
     function validar_Edad_Sexo($edad, $sexo) {
         if ($sexo === "femenino" && $edad >= 18 && $edad <= 35) {
-            return "Bienvenido, usted está en el rango de edad permitido.";
+            return "Bienvenida, usted está en el rango de edad permitido.";
         } else {
             return "Lo sentimos, no cumple con los requisitos necesarios.";
         }
     }
+
+    $parqueVehicular = [
+        "ABC1234" => [
+            "Auto" => [
+                "marca" => "HONDA",
+                "modelo" => 2020,
+                "tipo" => "camioneta"
+            ],
+            "Propietario" => [
+                "nombre" => "Alfonzo Esparza",
+                "ciudad" => "Puebla, Pue.",
+                "direccion" => "C.U., Jardines de San Manuel"
+            ]
+        ],
+        "XYZ5678" => [
+            "Auto" => [
+                "marca" => "MAZDA",
+                "modelo" => 2019,
+                "tipo" => "sedan"
+            ],
+            "Propietario" => [
+                "nombre" => "Ma. del Consuelo Molina",
+                "ciudad" => "Puebla, Pue.",
+                "direccion" => "97 oriente"
+            ]
+        ],
+        "LMN4321" => [
+        "Auto" => [
+            "marca" => "TOYOTA",
+            "modelo" => 2021,
+            "tipo" => "hatchback"
+        ],
+        "Propietario" => [
+            "nombre" => "Carlos Ramírez",
+            "ciudad" => "Guadalajara, Jal.",
+            "direccion" => "Av. Vallarta 123"
+        ]
+        ],
+        "DEF9876" => [
+            "Auto" => [
+                "marca" => "NISSAN",
+                "modelo" => 2018,
+                "tipo" => "sedan"
+            ],
+            "Propietario" => [
+                "nombre" => "Ana López",
+                "ciudad" => "Monterrey, NL.",
+                "direccion" => "Calle Reforma 456"
+            ]
+        ],
+        "GHI2468" => [
+            "Auto" => [
+                "marca" => "FORD",
+                "modelo" => 2022,
+                "tipo" => "camioneta"
+            ],
+            "Propietario" => [
+                "nombre" => "Javier Gómez",
+                "ciudad" => "Querétaro, Qro.",
+                "direccion" => "Blvd. Bernardo Quintana 789"
+            ]
+        ],
+        "JKL1357" => [
+            "Auto" => [
+                "marca" => "CHEVROLET",
+                "modelo" => 2020,
+                "tipo" => "sedan"
+            ],
+            "Propietario" => [
+                "nombre" => "Luis Torres",
+                "ciudad" => "León, Gto.",
+                "direccion" => "Calle Hidalgo 321"
+            ]
+        ],
+        "MNO8642" => [
+            "Auto" => [
+                "marca" => "BMW",
+                "modelo" => 2023,
+                "tipo" => "hatchback"
+            ],
+            "Propietario" => [
+                "nombre" => "Mariana Sánchez",
+                "ciudad" => "CDMX",
+                "direccion" => "Colonia Roma Norte"
+            ]
+        ],
+        "PQR5793" => [
+            "Auto" => [
+                "marca" => "MERCEDES",
+                "modelo" => 2019,
+                "tipo" => "sedan"
+            ],
+            "Propietario" => [
+                "nombre" => "Fernando Aguilar",
+                "ciudad" => "Mérida, Yuc.",
+                "direccion" => "Av. Montejo 567"
+            ]
+        ],
+        "STU8024" => [
+            "Auto" => [
+                "marca" => "AUDI",
+                "modelo" => 2021,
+                "tipo" => "camioneta"
+            ],
+            "Propietario" => [
+                "nombre" => "Andrea Navarro",
+                "ciudad" => "Tijuana, BC.",
+                "direccion" => "Zona Río 890"
+            ]
+        ],
+        "VWX3142" => [
+            "Auto" => [
+                "marca" => "KIA",
+                "modelo" => 2020,
+                "tipo" => "hatchback"
+            ],
+            "Propietario" => [
+                "nombre" => "Ricardo Pérez",
+                "ciudad" => "San Luis Potosí, SLP.",
+                "direccion" => "Centro Histórico"
+            ]
+        ],
+        "YZA2716" => [
+            "Auto" => [
+                "marca" => "VOLKSWAGEN",
+                "modelo" => 2018,
+                "tipo" => "sedan"
+            ],
+            "Propietario" => [
+                "nombre" => "Gabriela Ruiz",
+                "ciudad" => "Toluca, Edo. Méx.",
+                "direccion" => "Colonia Centro"
+            ]
+        ]
+    ];
     
-
-
 ?>
 
