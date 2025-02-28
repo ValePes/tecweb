@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Productos</title>
+    <style>
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label, input, textarea, select {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+      h2{
+            text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <h2>Registro de Nuevo Producto</h2>
+    <form id="formularioProductos" action="http://localhost/tecweb/practicas/p09/set_producto_v2.php" method="POST" enctype="multipart/form-data">
+        
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="form-nombre" name="nombre" required><div id="res1" class="error"></div>
+        
+        <fieldset>
+            <legend>Marca</legend>
+            <p>Selecciona la marca del producto: 
+              <select name="marca" id="form-marca">
+                <option value=" ">Seleccionar</option>
+                <option>Samsung</option>
+                <option>Apple</option>
+                <option>Alba</option>
+                <option>Espasa</option>
+                <option>Lenovo</option>
+                <option>Dell</option>
+                <option>Omega</option>
+                <option>Fossil</option>
+                <option>Oster</option>
+              </select>
+            </p>
+            <div id="res2" class="error"></div>
+        </fieldset>
+        
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="form-modelo" name="modelo" required><div id="res3" class="error"></div>
+        
+        <label for="precio">Precio:</label>
+        <input type="number" id="form-precio" name="precio" step="0.01" required><div id="res4" class="error"></div>
+        
+        <label for="detalles">Detalle:</label>
+        <textarea id="form-detalles" name="detalles" rows="5"></textarea><div id="res5" class="error"></div>
+        
+        <label for="unidades">Unidades:</label>
+        <input type="number" id="form-unidades" name="unidades" required><div id="res6" class="error"></div>
+        
+        <label for="imagen">Imagen del Producto:</label>
+        <input type="file" id="form-imagen" name="imagen" />
+        <input type="hidden" id="imagen-hidden" name="imagen_defecto" value="img/imgen.png" />
+    
+
+        
+        <button type="submit">Registrar Producto</button>
+        <button type="reset">Restablecer</button>
+    </form>
+
+    <!-- Script de Validación -->
+  <script src="./validacion_formulario.js"></script>
+</body>
+</html>
