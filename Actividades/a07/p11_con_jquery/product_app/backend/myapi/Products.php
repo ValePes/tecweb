@@ -13,35 +13,54 @@
             $this->conexion->set_charset("utf8"); 
         }
 
-        public function add ($prod){
-            $this->data= $prod; 
-        
+        public function add($prod) {
             $producto = file_get_contents('php://input');
             $this->data = array(
-                'status'  => 'error',
-                'message' => 'El nombre del producto ya existe, por favor ingresa otro nombre' 
+                'status' => 'error',
+                'message' => 'El nombre del producto ya existe, por favor ingresa otro nombre'
             );
+            
             if(!empty($producto)) {
-                // SE TRANSFORMA EL STRING DEL JASON A OBJETO
                 $jsonOBJ = json_decode($producto);
-                // SE ASUME QUE LOS DATOS YA FUERON VALIDADOS ANTES DE ENVIARSE
-                $sql = "SELECT * FROM productos WHERE nombre = '{$jsonOBJ->nombre}' AND eliminado = 0";
+                
+                // Verificar si json_decode fue exitoso
+                if(json_last_error() !== JSON_ERROR_NONE) {
+                    $this->data['message'] = 'JSON inválido';
+                    return;
+                }
+                
+                // Validar que el objeto tenga las propiedades necesarias
+                if(!isset($jsonOBJ->nombre)) {
+                    $this->data['message'] = 'El campo nombre es requerido';
+                    return;
+                }
+                
+                // Escapar valores para prevenir SQL injection
+                $nombre = $this->conexion->real_escape_string($jsonOBJ->nombre);
+                $marca = $this->conexion->real_escape_string($jsonOBJ->marca ?? '');
+                $modelo = $this->conexion->real_escape_string($jsonOBJ->modelo ?? '');
+                $precio = floatval($jsonOBJ->precio ?? 0);
+                $detalles = $this->conexion->real_escape_string($jsonOBJ->detalles ?? '');
+                $unidades = intval($jsonOBJ->unidades ?? 1);
+                $imagen = $this->conexion->real_escape_string($jsonOBJ->imagen ?? 'img/imagen.png');
+        
+                // Verificar si el producto ya existe
+                $sql = "SELECT id FROM productos WHERE nombre = '$nombre' AND eliminado = 0 LIMIT 1";
                 $result = $this->conexion->query($sql);
                 
                 if ($result->num_rows == 0) {
-                    $this->conexion->set_charset("utf8");
-                    $sql = "INSERT INTO productos VALUES (null, '{$jsonOBJ->nombre}', '{$jsonOBJ->marca}', '{$jsonOBJ->modelo}', {$jsonOBJ->precio}, '{$jsonOBJ->detalles}', {$jsonOBJ->unidades}, '{$jsonOBJ->imagen}', 0)";
+                    $sql = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado) 
+                            VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen', 0)";
+                    
                     if($this->conexion->query($sql)){
-                        $this->data['status'] =  "success";
-                        $this->data['message'] =  "Producto agregado";
+                        $this->data['status'] = "success";
+                        $this->data['message'] = "Producto agregado";
+                        $this->data['id'] = $this->conexion->insert_id;
                     } else {
-                        $this->data['message'] = "ERROR: No se ejecuto $sql. " . mysqli_error($this->conexion);
+                        $this->data['message'] = "ERROR: " . $this->conexion->error;
                     }
+                    $result->free();
                 }
-
-                $result->free();
-                // Cierra la conexion
-                $this->conexion->close();
             }
         }
 
@@ -49,21 +68,20 @@
              // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
             $this->data = array(
                 'status'  => 'error',
-                'message' => 'La consulta falló'
+                'message' => 'No se pudo eliminar el producto'
             );
-            // SE VERIFICA HABER RECIBIDO EL ID
-            if( isset($_GET['id']) ) {
-                $id = $_GET['id'];
+            
                 // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
                 $sql = "UPDATE productos SET eliminado=1 WHERE id = {$id}";
-                if ( $this->conexion->query($sql) ) {
-                    $this->data['status'] =  "success";
-                    $this->data['message'] =  "Producto eliminado";
+                if ($this->conexion->query($sql) ) {
+                    $this->data['status'] = "success";
+                    $this->data['message'] = "Producto eliminado";
                 } else {
-                    $data['message'] = "ERROR: No se ejecuto $sql. " . mysqli_error($this->conexion);
+                    $this->$data['message'] = "ERROR: No se ejecuto $sql. " . mysqli_error($this->conexion);
                 }
+                
                 $this->conexion->close();
-            } 
+            
         }
 
         public function edit ($da){
@@ -91,10 +109,10 @@
             $sql = "UPDATE productos SET nombre = ?, precio = ?, unidades = ?, modelo = ?, marca = ?, detalles = ?, imagen = ? WHERE id = ?";
             if ($stmt = $this->conexion->prepare($sql)) {
                 $stmt->bind_param('sdissssi', $nombre, $precio, $unidades, $modelo, $marca, $detalles, $imagen, $id);
-
+                
                 if ($stmt->execute()) {
                     if ($stmt->affected_rows > 0) {
-                        echo json_encode(["status" => "success", "message" => "Producto actualizado correctamente."]);
+                        echo json_encode(["status" => "success", "message" => "Producto actualizado."]);
                     } else {
                         echo json_encode(["status" => "error", "message" => "No se actualizó el producto. Verifica el ID o los datos."]);
                     }
@@ -129,8 +147,7 @@
                 $result->free(); 
             } else{
                 die('Query Error: '.mysqli_error($this->conexion)); 
-            }
-            //$this->conexion->close(); 
+            } 
         }
 
         public function search($search){
@@ -202,9 +219,16 @@
 
         }
 
-        public function getData(){
-            header('Content-Type: application/json');
-            return json_encode($this->data, JSON_PRETTY_PRINT); 
-        }
+       public function getData() {
+    header('Content-Type: application/json');
+    if (empty($this->data)) {
+        return json_encode([
+            "status" => "error",
+            "message" => "No se encontraron datos",
+            "data" => []
+        ], JSON_PRETTY_PRINT);
+    }
+    return json_encode($this->data, JSON_PRETTY_PRINT);
+}
     }
 ?>
