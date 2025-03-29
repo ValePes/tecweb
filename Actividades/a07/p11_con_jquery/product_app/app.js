@@ -15,13 +15,14 @@ $(document).ready(function () {
     $('#description').val(JsonString);
     $('#product-result').hide();
     listarProductos();
-    console.log("Tipo de dato recibido:", typeof data);
-            console.log("Respuesta del servidor:", data);
+
     function listarProductos() {
         $.ajax({
             url: './backend/product-list.php',
             type: 'GET',
             success: function (response) {
+                console.log(response);
+                
                 // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
                 const productos = JSON.parse(response);
 
@@ -54,8 +55,6 @@ $(document).ready(function () {
                     });
                     // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
                     $('#products').html(template);
-                    console.log("Tipo de dato recibido:", typeof data);
-            console.log("Respuesta del servidor:", data);
                 }
             }
         });
@@ -159,7 +158,7 @@ $(document).ready(function () {
         const unidades = $('#form-unidades').val();
         const modelo = $('#form-modelo').val();
         const marca = $('#form-marca').val();
-        const descripcion = $('#form-descripcion').val();
+        const descripcion = $('#form-description').val();
 
         if(!nombre || nombre.length > 100){
             mensajeError = "Debes colocar el nombre y no debe exceder los 100 caracteres"; 
@@ -192,34 +191,45 @@ $(document).ready(function () {
             id: $('#productId').val()
         };
     
-        console.log("Tipo de dato recibido:", typeof data);
-            console.log("Respuesta del servidor:", data);
-        const url = edit ? './backend/product-edit.php' : './backend/product-add.php';
-    
-        console.log("Tipo de dato recibido:", typeof data);
-        console.log("Respuesta del servidor:", data);
-    
-        $.post(url, postData, function (response) {
-            let respuesta = JSON.parse(response);
-            $('#container').html(`
-                <li style="list-style: none;">status: ${respuesta.status}</li>
-                <li style="list-style: none;">message: ${respuesta.message}</li>
-            `);
-            $('#product-result').show();
-            listarProductos();  
-            edit = false;  
-            $('button.btn-primary').text("Agregar Producto");
-        });
+            $.ajax({
+                url: edit ? './backend/product-edit.php' : './backend/product-add.php',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
+                success: function(response) {
+                    try {
+                        const respuesta = JSON.parse(response);
+                        if(respuesta.status === 'success') {
+                            // Mostrar mensaje de éxito
+                            $('#container').html(`
+                                <li style="list-style: none;">status: ${respuesta.status}</li>
+                                <li style="list-style: none;">message: ${respuesta.message}</li>
+                            `);
+                            $('#product-result').show();
+                            listarProductos();
+                            edit = false;
+                            $('button.btn-primary').text("Agregar Producto");
+                            $('#product-form')[0].reset();
+                        } else {
+                            mostrarError(respuesta.message);
+                        }
+                    } catch(e) {
+                        mostrarError('Respuesta inválida del servidor');
+                        console.error('Error parsing JSON:', e, 'Response:', response);
+                    }
+                },
+
+            });
+        
     });
     
 
     $(document).on('click', '.product-delete', (e) => {
-        console.log("Tipo de dato recibido:", typeof data);
-            console.log("Respuesta del servidor:", data);
-        if (confirm('¿Realmente deseas eliminar el producto?')) {
+        if (confirm('¿Desea eliminar el producto?')) {
             const element = $(this)[0].activeElement.parentElement.parentElement;
             const id = $(element).attr('productId');
             $.post('./backend/product-delete.php', { id }, (response) => {
+                console.log(response);
                 $('#product-result').hide();
                 listarProductos();
             });
@@ -228,8 +238,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.product-item', function (e) {
         e.preventDefault();
-        console.log("Tipo de dato recibido:", typeof data);
-        console.log("Respuesta del servidor:", data);
+
         const element = $(this).closest('tr');  
         const id = element.attr('productId'); 
 
@@ -241,7 +250,7 @@ $(document).ready(function () {
             $('#form-unidades').val(product.unidades);
             $('#form-modelo').val(product.modelo);
             $('#form-marca').val(product.marca);
-            $('#form-descripcion').val(product.detalles);
+            $('#form-description').val(product.detalles);
             $('#imagen_defecto').val(product.imagen);
             $('#productId').val(product.id);
 
