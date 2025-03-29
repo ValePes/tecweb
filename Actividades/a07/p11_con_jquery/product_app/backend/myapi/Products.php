@@ -91,7 +91,7 @@
 
             // Verificar que se recibieron los datos necesarios
             if (!isset($this->data['id'], $this->data['nombre'], $this->data['precio'], $this->data['unidades'], $this->data['modelo'], $this->data['marca'], $this->data['detalles'], $this->data['imagen'])) {
-                echo json_encode(["status" => "error", "message" => "Datos incompletos o inválidos."]);
+                echo json_encode(["status" => "error", "message" => "Datos incompletos o invalidos."]);
                 exit;
             }
 
@@ -114,7 +114,7 @@
                     if ($stmt->affected_rows > 0) {
                         echo json_encode(["status" => "success", "message" => "Producto actualizado."]);
                     } else {
-                        echo json_encode(["status" => "error", "message" => "No se actualizó el producto. Verifica el ID o los datos."]);
+                        echo json_encode(["status" => "error", "message" => "No se actualizó el producto, por favor verifica los datos"]);
                     }
                 } else {
                     echo json_encode(["status" => "error", "message" => "Error al ejecutar la consulta: " . $stmt->error]);
