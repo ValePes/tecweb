@@ -15,33 +15,49 @@ $(document).ready(function () {
     $('#description').val(JsonString);
     $('#product-result').hide();
     listarProductos();
-
-    function listarProductos() {
-        $.get("./backend/product-list.php", function (data) {
-            console.log("Tipo de dato recibido:", typeof data);
+    console.log("Tipo de dato recibido:", typeof data);
             console.log("Respuesta del servidor:", data);
-            let productos = JSON.parse(data);
-            let template = "";
-            productos.forEach(producto => {
-                let descripcion = `
-                    <li>precio: ${producto.precio}</li>
-                    <li>unidades: ${producto.unidades}</li>
-                    <li>modelo: ${producto.modelo}</li>
-                    <li>marca: ${producto.marca}</li>
-                    <li>detalles: ${producto.detalles}</li>
-                `;
-                template += `
-                    <tr productId="${producto.id}">
-                        <td>${producto.id}</td>
-                        <td>
-                            <a href="#" class="product-item">${producto.nombre}</a>
-                        </td>
-                        <td><ul>${descripcion}</ul></td>
-                        <td><button class="product-delete btn btn-danger">Eliminar</button></td>
-                    </tr>
-                `;
-            });
-            $("#products").html(template);
+    function listarProductos() {
+        $.ajax({
+            url: './backend/product-list.php',
+            type: 'GET',
+            success: function (response) {
+                // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
+                const productos = JSON.parse(response);
+
+                // SE VERIFICA SI EL OBJETO JSON TIENE DATOS
+                if (Object.keys(productos).length > 0) {
+                    // SE CREA UNA PLANTILLA PARA CREAR LAS FILAS A INSERTAR EN EL DOCUMENTO HTML
+                    let template = '';
+
+                    productos.forEach(producto => {
+                        // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
+                        let descripcion = '';
+                        descripcion += '<li>precio: ' + producto.precio + '</li>';
+                        descripcion += '<li>unidades: ' + producto.unidades + '</li>';
+                        descripcion += '<li>modelo: ' + producto.modelo + '</li>';
+                        descripcion += '<li>marca: ' + producto.marca + '</li>';
+                        descripcion += '<li>detalles: ' + producto.detalles + '</li>';
+
+                        template += `
+                            <tr productId="${producto.id}">
+                                <td>${producto.id}</td>
+                                <td><a href="#" class="product-item">${producto.nombre}</a></td>
+                                <td><ul>${descripcion}</ul></td>
+                                <td>
+                                    <button class="product-delete btn btn-danger" onclick="eliminarProducto()">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
+                    $('#products').html(template);
+                    console.log("Tipo de dato recibido:", typeof data);
+            console.log("Respuesta del servidor:", data);
+                }
+            }
         });
     }
 
@@ -146,7 +162,7 @@ $(document).ready(function () {
         const descripcion = $('#form-descripcion').val();
 
         if(!nombre || nombre.length > 100){
-            mensajeError = "El nombre es obligatorio y no debe exceder los 100 caracteres"; 
+            mensajeError = "Debes colocar el nombre y no debe exceder los 100 caracteres"; 
         }else if(!precio || precio <= 99.99) {
             mensajeError = "El precio debe ser mayor a 99.99";
         } else if (unidades < 1) {
@@ -176,8 +192,12 @@ $(document).ready(function () {
             id: $('#productId').val()
         };
     
-        
+        console.log("Tipo de dato recibido:", typeof data);
+            console.log("Respuesta del servidor:", data);
         const url = edit ? './backend/product-edit.php' : './backend/product-add.php';
+    
+        console.log("Tipo de dato recibido:", typeof data);
+        console.log("Respuesta del servidor:", data);
     
         $.post(url, postData, function (response) {
             let respuesta = JSON.parse(response);
@@ -194,6 +214,8 @@ $(document).ready(function () {
     
 
     $(document).on('click', '.product-delete', (e) => {
+        console.log("Tipo de dato recibido:", typeof data);
+            console.log("Respuesta del servidor:", data);
         if (confirm('¿Realmente deseas eliminar el producto?')) {
             const element = $(this)[0].activeElement.parentElement.parentElement;
             const id = $(element).attr('productId');
@@ -206,7 +228,8 @@ $(document).ready(function () {
 
     $(document).on('click', '.product-item', function (e) {
         e.preventDefault();
-
+        console.log("Tipo de dato recibido:", typeof data);
+        console.log("Respuesta del servidor:", data);
         const element = $(this).closest('tr');  
         const id = element.attr('productId'); 
 
@@ -226,5 +249,4 @@ $(document).ready(function () {
             $('button.btn-primary').text("Modificar Producto");
         });
     });
-
 });
