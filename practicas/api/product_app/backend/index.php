@@ -13,7 +13,7 @@ use TECWEB\MYAPI\DELETE\Delete;
 
 // Configuración inicial
 $app = AppFactory::create();
-$app->setBasePath('/tecweb/practicas/api/product_app/backend/index.php');
+$app->setBasePath('/tecweb/practicas/api/product_app/backend');
 
 // Permite acceso a la API para que los metodos get, post, put y delete sean autorizados 
 $app->add(function (Request $request, $handler): Response {
