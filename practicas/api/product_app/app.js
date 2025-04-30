@@ -17,7 +17,7 @@ $(document).ready(function () {
     listarProductos();
 
     function listarProductos() {
-        $.get("http://localhost/tecweb/practicas/api/product_app/backend/index.php/products", function (data) {
+        $.get("http://localhost/tecweb/practicas/api/product_app/backend/products", function (data) {
             console.log("Tipo de dato recibido:", typeof data);
             console.log("Respuesta del servidor:", data);
             //let productos = JSON.parse(data);
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
         $("#search").on("input", function () {
             let search = $(this).val();
-            $.get(`http://localhost/tecweb/practicas/api/product_app/backend/index.php/products/${search}`, function (data) {
+            $.get(`http://localhost/tecweb/practicas/api/product_app/backend/products/${search}`, function (data) {
                 let productos = data;
                             let template = '';
                             let template_bar = '';
@@ -97,7 +97,7 @@ $(document).ready(function () {
 
         if (nombre) {
             $.ajax({
-                url: 'http://localhost/tecweb/practicas/api/product_app/backend/index.php/products/${nombre}', 
+                url: 'http://localhost/tecweb/practicas/api/product_app/backend/products/${nombre}', 
                 method: 'GET',
                 data: { search: nombre },
                 success: function(response) {
@@ -163,7 +163,7 @@ $(document).ready(function () {
             id: $('#productId').val() 
         });
 
-        const url = "http://localhost/tecweb/practicas/api/product_app/backend/index.php/product";
+        const url = "http://localhost/tecweb/practicas/api/product_app/backend/product";
         const method = edit ? 'PUT' : 'POST';
         
         $.ajax({
@@ -196,7 +196,7 @@ $(document).ready(function () {
     if (confirm("¿Desea eliminar el producto?")) {
         let id = $(this).closest("tr").attr("productId");
 
-        fetch(`http://localhost/tecweb/practicas/api/product_app/backend/index.php/product/${id}`, {
+        fetch(`http://localhost/tecweb/practicas/api/product_app/backend/product/${id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -216,7 +216,7 @@ $(document).ready(function () {
         let element = $(this)[0].parentElement.parentElement;
         let id = $(element).attr('productId'); 
     
-        $.get(`http://localhost/tecweb/practicas/api/product_app/backend/index.php/product/${id}`, function(response) {
+        $.get(`http://localhost/tecweb/practicas/api/product_app/backend/product/${id}`, function(response) {
             console.log('Respuesta del servidor:', response);  
             let product = response;  
         
